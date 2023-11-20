@@ -1,21 +1,12 @@
-import {defineType, defineArrayMember} from 'sanity'
+import { BiLinkAlt, BiLinkExternal } from "react-icons/bi";
+import { externalLinkUrl, internalLinkRef } from "./linkObject";
 
-/**
- * This is the schema definition for the rich text fields used for
- * for this blog studio. When you import it in schemas.js it can be
- * reused in other parts of the studio with:
- *  {
- *    name: 'someName',
- *    title: 'Some title',
- *    type: 'blockContent'
- *  }
- */
-export default defineType({
+export const richTextMain = {
   title: 'Block Content',
   name: 'blockContent',
   type: 'array',
   of: [
-    defineArrayMember({
+    {
       title: 'Block',
       type: 'block',
       // Styles let you set what your user can mark up blocks with. These
@@ -42,26 +33,32 @@ export default defineType({
         // Annotations can be any object structure – e.g. a link or a footnote.
         annotations: [
           {
-            title: 'URL',
-            name: 'link',
+            title: 'Internal Link',
+            name: 'internalLink',
+            icon: BiLinkAlt,
             type: 'object',
             fields: [
-              {
-                title: 'URL',
-                name: 'href',
-                type: 'url',
-              },
+              internalLinkRef
+            ],
+          },
+          {
+            title: 'External Link',
+            name: 'externalLink',
+            icon: BiLinkExternal,
+            type: 'object',
+            fields: [
+              externalLinkUrl
             ],
           },
         ],
       },
-    }),
+    },
     // You can add additional types here. Note that you can't use
     // primitive types such as 'string' and 'number' in the same array
     // as a block type.
-    defineArrayMember({
+    {
       type: 'image',
       options: {hotspot: true},
-    }),
+    },
   ],
-})
+}
